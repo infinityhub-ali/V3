@@ -66,6 +66,13 @@ header{
 
 <div class="container">
   <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
+  <div class="card" onclick="getWeather()">
+  🌤️ Live Weather
+</div>
+
+<div class="card" onclick="getCrypto()">
+  ₿ Crypto Prices
+</div>
   <div class="card" onclick="openSec('learn')">🎓 Learn Zone</div>
   <div class="card" onclick="openSec('market')">📊 Market Zone</div>
   <div class="card" onclick="openSec('tools')">🧰 Tools</div>
@@ -106,6 +113,8 @@ function goBack(){
   document.querySelectorAll('.section').forEach(s=>s.style.display='none');
   document.querySelector('.container').style.display='grid';
 }
+  <div id="weatherBox" class="section"></div>
+<div id="cryptoBox" class="section"></div>
 </script>
 
 </body>
