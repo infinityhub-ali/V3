@@ -100,8 +100,12 @@ header{
 </div>
 
 <!-- OUTPUT BOXES -->
-<div id="weatherBox" class="section"></div>
-<div id="cryptoBox" class="section"></div>
+<div id="weatherBox" class="section">
+  <button class="back" onclick="goHome()">⬅ Back</button>
+</div>
+<div id="cryptoBox" class="section">
+  <button class="back" onclick="goHome()">⬅ Back</button>
+</div>
 
 <script>
 function openSec(id){
@@ -140,6 +144,10 @@ async function getCrypto() {
     "<p>Bitcoin: $" + data.bitcoin.usd + "</p>" +
     "<p>Ethereum: $" + data.ethereum.usd + "</p>";
 }
+  function goHome(){
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('.container').style.display = 'grid';
+  }
 </script>
 
 </body>
