@@ -61,51 +61,52 @@ header{
 
 <header>
   <h1>Infinity Hub V3</h1>
-  <p>Clean Dashboard System</p>
+  <p>Smart Dashboard System</p>
 </header>
 
+<!-- TOP CARDS -->
 <div class="container">
-  <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
-  <div class="card" onclick="getWeather()">
-  🌤️ Live Weather
-</div>
 
-<div class="card" onclick="getCrypto()">
-  ₿ Crypto Prices
-</div>
+  <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
   <div class="card" onclick="openSec('learn')">🎓 Learn Zone</div>
   <div class="card" onclick="openSec('market')">📊 Market Zone</div>
   <div class="card" onclick="openSec('tools')">🧰 Tools</div>
+
+  <!-- NEW FEATURES -->
+  <div class="card" onclick="getWeather()">🌤️ Live Weather</div>
+  <div class="card" onclick="getCrypto()">₿ Crypto Prices</div>
+
 </div>
 
+<!-- SECTIONS -->
 <div id="quick" class="section">
   <button class="back" onclick="goBack()">⬅ Back</button>
   <h2>Quick Hub</h2>
-  <input placeholder="Search..." style="padding:10px;width:80%;">
 </div>
 
 <div id="learn" class="section">
   <button class="back" onclick="goBack()">⬅ Back</button>
   <h2>Learn Zone</h2>
-  <p>Study tools + AI help (coming soon)</p>
 </div>
 
 <div id="market" class="section">
   <button class="back" onclick="goBack()">⬅ Back</button>
   <h2>Market Zone</h2>
-  <p>Crypto + Stocks (coming soon)</p>
 </div>
 
 <div id="tools" class="section">
   <button class="back" onclick="goBack()">⬅ Back</button>
   <h2>Tools</h2>
-  <p>Utility tools section</p>
 </div>
+
+<!-- OUTPUT BOXES -->
+<div id="weatherBox" class="section"></div>
+<div id="cryptoBox" class="section"></div>
 
 <script>
 function openSec(id){
   document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.querySelector('.container').style.display='none';
+  document.querySelector('.container').style.display='grid';
   document.getElementById(id).style.display='block';
 }
 
@@ -113,8 +114,32 @@ function goBack(){
   document.querySelectorAll('.section').forEach(s=>s.style.display='none');
   document.querySelector('.container').style.display='grid';
 }
-  <div id="weatherBox" class="section"></div>
-<div id="cryptoBox" class="section"></div>
+
+async function getWeather() {
+  let url = "https://api.open-meteo.com/v1/forecast?latitude=24.817&longitude=93.936&current_weather=true";
+
+  let res = await fetch(url);
+  let data = await res.json();
+
+  document.getElementById("weatherBox").style.display = "block";
+  document.getElementById("weatherBox").innerHTML =
+    "<h2>🌤️ Weather</h2>" +
+    "<p>Temp: " + data.current_weather.temperature + "°C</p>" +
+    "<p>Wind: " + data.current_weather.windspeed + " km/h</p>";
+}
+
+async function getCrypto() {
+  let url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd";
+
+  let res = await fetch(url);
+  let data = await res.json();
+
+  document.getElementById("cryptoBox").style.display = "block";
+  document.getElementById("cryptoBox").innerHTML =
+    "<h2>₿ Crypto</h2>" +
+    "<p>Bitcoin: $" + data.bitcoin.usd + "</p>" +
+    "<p>Ethereum: $" + data.ethereum.usd + "</p>";
+}
 </script>
 
 </body>
