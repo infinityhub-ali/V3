@@ -64,10 +64,22 @@ header{
   <h1>Infinity Hub V3</h1>
   <p>Smart Dashboard System</p>
 </header>
+  <div style="text-align:center; padding:10px;">
+  <input id="searchInput" placeholder="Search anything..."
+  style="padding:10px; width:70%; border-radius:10px; border:none;">
+
+  <button onclick="doSearch()"
+  style="padding:10px; border:none; border-radius:10px; background:#22c55e; color:white;">
+  Search
+  </button>
+  </div>
 
 <!-- DASHBOARD -->
 <div class="container">
 
+  <div class="card" onclick="getNews()">
+  📰 Latest News
+  </div>
   <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
   <div class="card" onclick="openSec('learn')">🎓 Learn Zone</div>
   <div class="card" onclick="openSec('market')">📊 Market Zone</div>
@@ -102,7 +114,7 @@ header{
 <!-- OUTPUT BOXES -->
 <div id="weatherBox" class="section"></div>
 <div id="cryptoBox" class="section"></div>
-
+<div id="newsBox" class="section"></div>
 <script>
 
 function goHome(){
@@ -147,8 +159,43 @@ async function getCrypto(){
     "<p>Bitcoin: $" + data.bitcoin.usd + "</p>" +
     "<p>Ethereum: $" + data.ethereum.usd + "</p>";
 }
+  <script>
+function doSearch(){
+  let q = document.getElementById("searchInput").value;
 
+  if(!q){
+    alert("Type something first");
+    return;
+  }
+
+  window.open("https://www.google.com/search?q=" + q, "_blank");
+}
+  async function getNews(){
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+
+  let url = "https://gnews.io/api/v4/top-headlines?lang=en&token=demo";
+
+  try {
+    let res = await fetch(url);
+    let data = await res.json();
+
+    document.getElementById("newsBox").style.display = "block";
+
+    let html = "<button class='back' onclick='goHome()'>⬅ Back</button>";
+    html += "<h2>📰 Latest News</h2>";
+
+    data.articles.slice(0,5).forEach(a=>{
+      html += "<p>• " + a.title + "</p>";
+    });
+
+    document.getElementById("newsBox").innerHTML = html;
+
+  } catch(e){
+    document.getElementById("newsBox").innerHTML =
+      "<button class='back' onclick='goHome()'>⬅ Back</button><p>News failed to load</p>";
+  }
 </script>
 
 </body>
 </html>
+hu
