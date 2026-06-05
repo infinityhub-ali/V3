@@ -30,8 +30,8 @@ header{
   background:#1e293b;
   padding:20px;
   border-radius:12px;
-  cursor:pointer;
   text-align:center;
+  cursor:pointer;
   transition:0.2s;
 }
 
@@ -48,13 +48,14 @@ header{
 .back{
   padding:8px 12px;
   background:red;
-  border:none;
   color:white;
+  border:none;
   border-radius:8px;
   cursor:pointer;
   margin-bottom:10px;
 }
 </style>
+
 </head>
 
 <body>
@@ -64,7 +65,7 @@ header{
   <p>Smart Dashboard System</p>
 </header>
 
-<!-- TOP CARDS -->
+<!-- DASHBOARD -->
 <div class="container">
 
   <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
@@ -72,82 +73,81 @@ header{
   <div class="card" onclick="openSec('market')">📊 Market Zone</div>
   <div class="card" onclick="openSec('tools')">🧰 Tools</div>
 
-  <!-- NEW FEATURES -->
   <div class="card" onclick="getWeather()">🌤️ Live Weather</div>
   <div class="card" onclick="getCrypto()">₿ Crypto Prices</div>
 
 </div>
 
-<!-- SECTIONS -->
+<!-- ZONES -->
 <div id="quick" class="section">
-  <button class="back" onclick="goBack()">⬅ Back</button>
+  <button class="back" onclick="goHome()">⬅ Back</button>
   <h2>Quick Hub</h2>
 </div>
 
 <div id="learn" class="section">
-  <button class="back" onclick="goBack()">⬅ Back</button>
+  <button class="back" onclick="goHome()">⬅ Back</button>
   <h2>Learn Zone</h2>
 </div>
 
 <div id="market" class="section">
-  <button class="back" onclick="goBack()">⬅ Back</button>
+  <button class="back" onclick="goHome()">⬅ Back</button>
   <h2>Market Zone</h2>
 </div>
 
 <div id="tools" class="section">
-  <button class="back" onclick="goBack()">⬅ Back</button>
+  <button class="back" onclick="goHome()">⬅ Back</button>
   <h2>Tools</h2>
 </div>
 
 <!-- OUTPUT BOXES -->
-<div id="weatherBox" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-</div>
-<div id="cryptoBox" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-</div>
+<div id="weatherBox" class="section"></div>
+<div id="cryptoBox" class="section"></div>
 
 <script>
+
+function goHome(){
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('.container').style.display = 'grid';
+}
+
 function openSec(id){
-  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.querySelector('.container').style.display='grid';
-  document.getElementById(id).style.display='block';
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('.container').style.display = 'grid';
+  document.getElementById(id).style.display = 'block';
 }
 
-function goBack(){
-  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.querySelector('.container').style.display='grid';
-}
-
-async function getWeather() {
+async function getWeather(){
   let url = "https://api.open-meteo.com/v1/forecast?latitude=24.817&longitude=93.936&current_weather=true";
 
   let res = await fetch(url);
   let data = await res.json();
 
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById("weatherBox").style.display = "block";
+
   document.getElementById("weatherBox").innerHTML =
-    "<h2>🌤️ Weather</h2>" +
-    "<p>Temp: " + data.current_weather.temperature + "°C</p>" +
-    "<p>Wind: " + data.current_weather.windspeed + " km/h</p>";
+    "<button class='back' onclick='goHome()'>⬅ Back</button>" +
+    "<h2>🌤️ Live Weather</h2>" +
+    "<p>Temperature: " + data.current_weather.temperature + "°C</p>" +
+    "<p>Wind Speed: " + data.current_weather.windspeed + " km/h</p>";
 }
 
-async function getCrypto() {
+async function getCrypto(){
   let url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd";
 
   let res = await fetch(url);
   let data = await res.json();
 
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById("cryptoBox").style.display = "block";
+
   document.getElementById("cryptoBox").innerHTML =
-    "<h2>₿ Crypto</h2>" +
+    "<button class='back' onclick='goHome()'>⬅ Back</button>" +
+    "<h2>₿ Crypto Prices</h2>" +
     "<p>Bitcoin: $" + data.bitcoin.usd + "</p>" +
     "<p>Ethereum: $" + data.ethereum.usd + "</p>";
 }
-  function goHome(){
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.querySelector('.container').style.display = 'grid';
-  }
+
 </script>
 
 </body>
