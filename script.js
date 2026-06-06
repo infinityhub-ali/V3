@@ -41,3 +41,37 @@ function searchGoogle(){
     "_blank"
   );
 }
+function searchWeb(){
+
+let query =
+document.getElementById("searchInput").value;
+
+let engine =
+document.getElementById("searchEngine").value;
+
+if(query.trim()==="") return;
+
+let url="";
+
+if(engine==="google"){
+url="https://www.google.com/search?q=";
+}
+
+else if(engine==="bing"){
+url="https://www.bing.com/search?q=";
+}
+
+else if(engine==="duckduckgo"){
+url="https://duckduckgo.com/?q=";
+}
+
+else if(engine==="brave"){
+url="https://search.brave.com/search?q=";
+}
+
+window.open(
+url + encodeURIComponent(query),
+"_blank"
+);
+
+}
