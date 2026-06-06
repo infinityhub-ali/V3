@@ -118,33 +118,29 @@
 
 <h2>🔍 Search Hub</h2>
 
-<div class="ai-grid">
+<input
+type="text"
+id="searchInput"
+placeholder="Search Anything..."
+>
 
-<a class="ai-card" href="https://chatgpt.com" target="_blank">
-🤖 ChatGPT
-</a>
+<select id="searchEngine">
 
-<a class="ai-card" href="https://gemini.google.com" target="_blank">
-✨ Gemini
-</a>
+<option value="google">Google</option>
 
-<a class="ai-card" href="https://claude.ai" target="_blank">
-🧠 Claude
-</a>
+<option value="bing">Bing</option>
 
-<a class="ai-card" href="https://www.deepseek.com" target="_blank">
-🔍 DeepSeek
-</a>
+<option value="duckduckgo">DuckDuckGo</option>
 
-<a class="ai-card" href="https://www.perplexity.ai" target="_blank">
-📚 Perplexity
-</a>
+<option value="brave">Brave</option>
 
-<a class="ai-card" href="https://copilot.microsoft.com" target="_blank">
-💻 Copilot
-</a>
+</select>
 
-</div>
+<br><br>
+
+<button onclick="searchWeb()">
+🔍 Search
+</button>
 
 </section>
 
