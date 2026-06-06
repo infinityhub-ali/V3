@@ -12,6 +12,7 @@ function showSection(sectionId){
 window.onload = function(){
   showSection("home");
 };
+
 function updateClock(){
 
   let now = new Date();
