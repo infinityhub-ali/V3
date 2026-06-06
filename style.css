@@ -134,3 +134,10 @@ ul li{
   transform:translateY(-5px);
   background:#475569;
 }
+select{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+margin:10px 0;
+}
