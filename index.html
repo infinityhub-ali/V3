@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Infinity Hub V3</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header>
+  <h1>Infinity Hub V3</h1>
+</header>
+
+<div class="search">
+  <input id="searchInput" placeholder="Search anything...">
+  <button onclick="search()">Search</button>
+</div>
+
+<div class="container">
+
+  <div class="card" onclick="weather()">🌤️ Weather</div>
+  <div class="card" onclick="crypto()">₿ Crypto</div>
+  <div class="card" onclick="news()">📰 News</div>
+
+</div>
+
+<div id="output" class="section"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
