@@ -28,3 +28,16 @@ function updateClock(){
 setInterval(updateClock,1000);
 
 updateClock();
+
+function searchGoogle(){
+
+  let query = document.getElementById("searchInput").value;
+
+  if(query.trim() === "") return;
+
+  window.open(
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(query),
+    "_blank"
+  );
+}
