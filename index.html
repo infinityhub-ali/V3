@@ -19,6 +19,27 @@ header{
   background:#111827;
 }
 
+.search-bar{
+  text-align:center;
+  padding:10px;
+}
+
+.search-bar input{
+  padding:10px;
+  width:70%;
+  border-radius:10px;
+  border:none;
+}
+
+.search-bar button{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+}
+
 .container{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -52,7 +73,6 @@ header{
   border:none;
   border-radius:8px;
   cursor:pointer;
-  margin-bottom:10px;
 }
 </style>
 
@@ -62,60 +82,39 @@ header{
 
 <header>
   <h1>Infinity Hub V3</h1>
-  <p>Smart Dashboard System</p>
 </header>
-  <div style="text-align:center; padding:10px;">
-  <input id="searchInput" placeholder="Search anything..."
-  style="padding:10px; width:70%; border-radius:10px; border:none;">
 
-  <button onclick="doSearch()"
-  style="padding:10px; border:none; border-radius:10px; background:#22c55e; color:white;">
-  Search
-  </button>
-  </div>
+<!-- SEARCH -->
+<div class="search-bar">
+  <input id="searchInput" placeholder="Search anything...">
+  <button onclick="doSearch()">Search</button>
+</div>
 
 <!-- DASHBOARD -->
 <div class="container">
 
-  <div class="card" onclick="getNews()">
-  📰 Latest News
-  </div>
   <div class="card" onclick="openSec('quick')">⚡ Quick Hub</div>
   <div class="card" onclick="openSec('learn')">🎓 Learn Zone</div>
   <div class="card" onclick="openSec('market')">📊 Market Zone</div>
   <div class="card" onclick="openSec('tools')">🧰 Tools</div>
 
-  <div class="card" onclick="getWeather()">🌤️ Live Weather</div>
-  <div class="card" onclick="getCrypto()">₿ Crypto Prices</div>
+  <div class="card" onclick="getWeather()">🌤️ Weather</div>
+  <div class="card" onclick="getCrypto()">₿ Crypto</div>
+  <div class="card" onclick="getNews()">📰 News</div>
 
 </div>
 
 <!-- ZONES -->
-<div id="quick" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-  <h2>Quick Hub</h2>
-</div>
+<div id="quick" class="section"><button class="back" onclick="goHome()">⬅ Back</button><h2>Quick Hub</h2></div>
+<div id="learn" class="section"><button class="back" onclick="goHome()">⬅ Back</button><h2>Learn Zone</h2></div>
+<div id="market" class="section"><button class="back" onclick="goHome()">⬅ Back</button><h2>Market Zone</h2></div>
+<div id="tools" class="section"><button class="back" onclick="goHome()">⬅ Back</button><h2>Tools</h2></div>
 
-<div id="learn" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-  <h2>Learn Zone</h2>
-</div>
-
-<div id="market" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-  <h2>Market Zone</h2>
-</div>
-
-<div id="tools" class="section">
-  <button class="back" onclick="goHome()">⬅ Back</button>
-  <h2>Tools</h2>
-</div>
-
-<!-- OUTPUT BOXES -->
+<!-- OUTPUT -->
 <div id="weatherBox" class="section"></div>
 <div id="cryptoBox" class="section"></div>
 <div id="newsBox" class="section"></div>
-<script>
+  <script>
 
 function goHome(){
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
@@ -128,74 +127,49 @@ function openSec(id){
   document.getElementById(id).style.display = 'block';
 }
 
-async function getWeather(){
-  let url = "https://api.open-meteo.com/v1/forecast?latitude=24.817&longitude=93.936&current_weather=true";
+function doSearch(){
+  let q = document.getElementById("searchInput").value;
+  if(!q) return alert("Type something");
+  window.open("https://www.google.com/search?q=" + q, "_blank");
+}
 
-  let res = await fetch(url);
+async function getWeather(){
+  goHome();
+
+  let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=24.817&longitude=93.936&current_weather=true");
   let data = await res.json();
 
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById("weatherBox").style.display = "block";
-
   document.getElementById("weatherBox").innerHTML =
     "<button class='back' onclick='goHome()'>⬅ Back</button>" +
-    "<h2>🌤️ Live Weather</h2>" +
-    "<p>Temperature: " + data.current_weather.temperature + "°C</p>" +
-    "<p>Wind Speed: " + data.current_weather.windspeed + " km/h</p>";
+    "<h2>🌤️ Weather</h2>" +
+    "<p>Temp: " + data.current_weather.temperature + "°C</p>";
 }
 
 async function getCrypto(){
-  let url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd";
+  goHome();
 
-  let res = await fetch(url);
+  let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
   let data = await res.json();
 
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById("cryptoBox").style.display = "block";
-
   document.getElementById("cryptoBox").innerHTML =
     "<button class='back' onclick='goHome()'>⬅ Back</button>" +
-    "<h2>₿ Crypto Prices</h2>" +
-    "<p>Bitcoin: $" + data.bitcoin.usd + "</p>" +
-    "<p>Ethereum: $" + data.ethereum.usd + "</p>";
+    "<h2>₿ Crypto</h2>" +
+    "<p>BTC: $" + data.bitcoin.usd + "</p>" +
+    "<p>ETH: $" + data.ethereum.usd + "</p>";
 }
-  <script>
-function doSearch(){
-  let q = document.getElementById("searchInput").value;
 
-  if(!q){
-    alert("Type something first");
-    return;
-  }
+async function getNews(){
+  goHome();
 
-  window.open("https://www.google.com/search?q=" + q, "_blank");
+  document.getElementById("newsBox").style.display = "block";
+  document.getElementById("newsBox").innerHTML =
+    "<button class='back' onclick='goHome()'>⬅ Back</button><h2>📰 News</h2>" +
+    "<p>Loading news...</p>";
 }
-  async function getNews(){
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
 
-  let url = "https://gnews.io/api/v4/top-headlines?lang=en&token=demo";
-
-  try {
-    let res = await fetch(url);
-    let data = await res.json();
-
-    document.getElementById("newsBox").style.display = "block";
-
-    let html = "<button class='back' onclick='goHome()'>⬅ Back</button>";
-    html += "<h2>📰 Latest News</h2>";
-
-    data.articles.slice(0,5).forEach(a=>{
-      html += "<p>• " + a.title + "</p>";
-    });
-
-    document.getElementById("newsBox").innerHTML = html;
-
-  } catch(e){
-    document.getElementById("newsBox").innerHTML =
-      "<button class='back' onclick='goHome()'>⬅ Back</button><p>News failed to load</p>";
-  }
 </script>
 
 </body>
 </html>
-hu
